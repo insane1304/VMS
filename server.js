@@ -46,7 +46,9 @@ const usersSchema=new mongoose.Schema({
   mobile:String,
   aadhar:String,
   status:String,
-  forgetPass:String
+  forgetPass:String,
+  inDate:String,
+  outDate:String,
 });
 
 usersSchema.plugin(passportLocalMongoose);
@@ -341,7 +343,7 @@ app.post("/signup",function(req,res)
   // vId="v"+parseString(start);
   // parse
   console.log(vId);
-
+  var d=new Date(Date.now);
   User.register({username:vId}, vPass, (err, user) => {
     if(err){
         console.log(err);
@@ -357,7 +359,9 @@ app.post("/signup",function(req,res)
         mobile: vMobile,
         aadhar: vAadhar,
         status: "active",
-        forgetPass:undefined
+        forgetPass:undefined,
+        inDate:d,
+        outDate:""
       },function(err,check){
         if(err)
         console.log(err);
@@ -496,7 +500,8 @@ app.post("/del_visitor",function(req,res){
     else{
       if(user)
       {
-          User.deleteOne({username:req.body.username},function(){
+        var d=new Date(Date.now());
+          User.updateOne({username:req.body.username},{status="Inactive",outDate:d},function(){
                 User.find({username:{ $regex: /^v/ }},function(err,check){
                 if(err)
                 console.log(err);
