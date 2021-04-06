@@ -28,7 +28,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
+// mongoose.connect("mongodb://localhost:27017/todo",{useNewUrlParser:true, useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://admin:sasyadmin@cluster0.masu3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",{useNewUrlParser:true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -104,11 +105,11 @@ async function findVisitor(){
   })
 };
 
-// User.register({username: "ayash123"}, "ysk", (err, user) => {
-//   if(err){
-//       console.log(err);
-//   }
-// });
+User.register({username: "ayash123"}, "ysk", (err, user) => {
+  if(err){
+      console.log(err);
+  }
+});
 
 app.get("/",function(req,res){
   res.render("home.ejs");
@@ -727,7 +728,7 @@ app.post("/forgetPass",function(req,res){
                   pass: process.env.GMAIL_PASS
                 }
               });
-              var link="http://localhost:3000/reset/"+token;
+              var link="https://vms-sasy.herokuapp.com/reset/"+token;
               var mailOptions = {
                 from: 'vms.sasy@gmail.com',
                 to: user.email,
