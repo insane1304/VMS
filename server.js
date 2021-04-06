@@ -501,7 +501,7 @@ app.post("/del_visitor",function(req,res){
       if(user)
       {
         var d=new Date(Date.now());
-          User.updateOne({username:req.body.username},{status="Inactive",outDate:d},function(){
+          User.updateOne({username:req.body.username},{status:"Inactive",outDate:d},function(){
                 User.find({username:{ $regex: /^v/ }},function(err,check){
                 if(err)
                 console.log(err);
