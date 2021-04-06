@@ -29,7 +29,7 @@ app.use(passport.session());
 
 app.use(flash());
 // mongoose.connect("mongodb://localhost:27017/todo",{useNewUrlParser:true, useUnifiedTopology: true });
-mongoose.connect("mongodb+srv://admin:sasyadmin@cluster0.masu3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",{useNewUrlParser:true, useUnifiedTopology: true });
+mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 const connection = mongoose.connection;
 connection.once('open', () => {
