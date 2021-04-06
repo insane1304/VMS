@@ -107,11 +107,11 @@ async function findVisitor(){
   })
 };
 
-User.register({username: "ayash123"}, "ysk", (err, user) => {
-  if(err){
-      console.log(err);
-  }
-});
+// User.register({username: "ayash123"}, "ysk", (err, user) => {
+//   if(err){
+//       console.log(err);
+//   }
+// });
 
 app.get("/",function(req,res){
   res.render("home.ejs");
@@ -343,7 +343,7 @@ app.post("/signup",function(req,res)
   // vId="v"+parseString(start);
   // parse
   console.log(vId);
-  var d=new Date(Date.now);
+  var d=new Date(Date.now());
   User.register({username:vId}, vPass, (err, user) => {
     if(err){
         console.log(err);
