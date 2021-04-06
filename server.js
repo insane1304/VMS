@@ -28,8 +28,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-// mongoose.connect("mongodb://localhost:27017/todo",{useNewUrlParser:true, useUnifiedTopology: true });
-mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/todo",{useNewUrlParser:true, useUnifiedTopology: true });
+// mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -49,6 +49,7 @@ const usersSchema=new mongoose.Schema({
   forgetPass:String,
   inDate:String,
   outDate:String,
+  url:String
 });
 
 usersSchema.plugin(passportLocalMongoose);
@@ -163,6 +164,8 @@ app.post("/signup",function(req,res)
   var vSex=req.body.sex;
 
   var vId=start.toString();
+
+  console.log(req.body.url);
   // var vId=id.toString();
   vId="v"+vId;
 
@@ -188,7 +191,8 @@ app.post("/signup",function(req,res)
         status: "active",
         forgetPass:undefined,
         inDate:d,
-        outDate:""
+        outDate:"",
+        url:req.body.url
       },function(err,check){
         if(err)
         console.log(err);
