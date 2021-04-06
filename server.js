@@ -106,12 +106,12 @@ async function findVisitor(){
     }
   })
 };
-
-User.register({username: "ayash123"}, "ysk", (err, user) => {
-  if(err){
-      console.log(err);
-  }
-});
+//
+// User.register({username: "ayash123"}, "ysk", (err, user) => {
+//   if(err){
+//       console.log(err);
+//   }
+// });
 
 require('./login')(app);
 

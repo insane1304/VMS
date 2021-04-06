@@ -116,9 +116,9 @@
         <label for="exampleInputEmail1">duration of stay</label>
 
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="visiting time" />
+          <input type="text" class="form-control" placeholder="visiting time" value="<%= visitor.inDate %>" readonly/>
           <span class="input-group-addon">-</span>
-          <input type="text" class="form-control" placeholder="leaving time" />
+          <input type="text" class="form-control" placeholder="leaving time"  value="<%= visitor.outDate %>" readonly/>
         </div>
 
 

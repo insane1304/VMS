@@ -2,7 +2,7 @@ body {
    background-image: linear-gradient(to bottom right, purple, lightblue);
   font-size: 16px;
   color: white;
- 
+
   font-family: 'Raleway', sans-serif;
   /* text-transform: lowercase; */
 }
@@ -17,7 +17,7 @@ font-family: 'Raleway', sans-serif;
 }
 .bg-light {
    background-color: rgba(0, 0, 0, 0.5)!important;
-  color: rgba(0, 0, 0, 0.5)!important;
+  color: white!important;
 }
 
 
@@ -41,7 +41,7 @@ font-family: 'Raleway', sans-serif;
 
 #head-color{
 padding-left: auto;
-padding-right: auto; 
+padding-right: auto;
   background-color: rgba(0, 0, 0, 0.5)!important;
   color: white!important;
 }
