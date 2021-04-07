@@ -48,9 +48,12 @@ module.exports = function(app){
                     intro:'Updated',
                     message:'Details updated successfully'
                   }
+                  QRCode.toDataURL(req.user.username,function(err,img){
+                    res.render("visitor_profile.ejs",{Visitor_Name:username,visitor:user,qr_code:img,message:req.session.message});
+                  });
 
                   // res.render("visitor_profile.ejs",{Visitor_Name:req.user.name,visitor:user,message:req.session.message});
-                  res.redirect("/profile");
+                  // res.redirect("/profile");
 
 
                     };
