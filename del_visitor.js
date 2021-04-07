@@ -44,7 +44,7 @@ module.exports = function(app){
                 subject: 'Thanks for your Visit',
                 // text: 'Thanks for registration',
                 attachDataUrls: true,
-                html:'Thanks for visiting the building.'+
+                html:'<b>Thanks for visiting the building.</b>'+
                      'Your username has been deactivated successfully<br>'+
                      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
               };

@@ -216,10 +216,10 @@ app.post("/signup",function(req,res)
               subject: 'Registration on VMS',
               // text: 'Thanks for registration',
               attachDataUrls: true,
-              html:'<b>You have successfully registered.</b>'+
+              html:'<b>You have successfully registered. </b>'+
                    'Your username is:<b> '+vId+'</b>'+
-                   'You can now use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'+
-                   'Below is your QR code. You need to scan this QR to have access to the building<br>'+
+                   ' You can now use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'+
+                   ' Below is your QR code. You need to scan this QR to have access to the building<br>'+
                    '<img src="'+img+'">'
             };
 
