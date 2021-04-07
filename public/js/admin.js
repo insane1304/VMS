@@ -16,11 +16,11 @@ function scrollFunction() {
 function topFunction() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-} 
+}
 
 function myFunction(x) {
   x.classList.toggle("change");
-} 
+}
 
 function myFunction() {
    var element = document.body;
@@ -40,6 +40,11 @@ function extend_admin(){
 
 var x=document.getElementById("leaving_time").value;
 console.log(x);
-//replace replace leaving time with it 
+//replace replace leaving time with it
 
+}
+
+
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
 }
