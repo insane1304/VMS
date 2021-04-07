@@ -47,7 +47,7 @@ module.exports = function(app){
                     req.session.message={
                       type:'success',
                       intro:'Updated',
-                      message:'Your details updated successfully'
+                      message:'Details updated successfully'
                     }
 
                     res.render("visitor_profile.ejs",{Visitor_Name:req.user.name,visitor:user,message:req.session.message});

@@ -48,7 +48,7 @@ module.exports = function(app){
                     req.session.message={
                       type:'success',
                       intro:'Updated',
-                      message:'Visitor details updated successfully'
+                      message:'Details updated successfully'
                     }
                     res.render("admin_profile.ejs",{Admin_Name:req.user.name,details:check,visitor:user,message:req.session.message});
                     // res.redirect("/");
