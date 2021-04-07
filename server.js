@@ -214,7 +214,7 @@ app.post("/signup",function(req,res)
               from: process.env.GMAIL_ID,
               to: vEmail,
               subject: 'Registration on VMS',
-              text: 'Thanks for registration. You have successfully registered.\nYour username is: '+vId+'\nYou can now use your username and password to login to your profile.\nBelow is your QR code. You need to scan this QR to have access to the building' ,
+              text: 'Thanks for registration. You have successfully registered. Your username is: '+vId+'. You can now use your username and password to login to your profile.\nBelow is your QR code. You need to scan this QR to have access to the building' ,
               attachDataUrls: true,
               attachments:[
                 {
