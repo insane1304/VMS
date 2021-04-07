@@ -10,7 +10,7 @@ module.exports = function(app){
 
 
   app.get("/visitor_update_by_visitor",function(req,res){
-    res.redirect("/Profile");
+    res.redirect("/profile");
   });
 
 
@@ -28,22 +28,22 @@ module.exports = function(app){
         if(user)
         {
             User.updateOne({username:req.body.username},{name:req.body.name,email:req.body.email,mobile:req.body.mobile,address:req.body.address},function(){
-                  User.find({username:{ $regex: /^v/ }},function(err,check){
-                  if(err)
-                  console.log(err);
-                  else{
-                    // console.log(user.email);
-                    user={
-                      "name":req.body.name,
-                      "sex":req.body.sex,
-                      "username":req.body.username,
-                      "address":req.body.address,
-                      "email":req.body.email,
-                      "mobile":req.body.mobile,
-                      "aadhar":req.body.aadhar,
-                      "password":"",
-                      "status":""
-                    };
+                  // User.find({username:{ $regex: /^v/ }},function(err,check){
+                  // if(err)
+                  // console.log(err);
+                  // else{
+                  //   // console.log(user.email);
+                  //   user={
+                  //     "name":req.body.name,
+                  //     "sex":req.body.sex,
+                  //     "username":req.body.username,
+                  //     "address":req.body.address,
+                  //     "email":req.body.email,
+                  //     "mobile":req.body.mobile,
+                  //     "aadhar":req.body.aadhar,
+                  //     "password":"",
+                  //     "status":""
+                  //   };
                     req.session.message={
                       type:'success',
                       intro:'Updated',
