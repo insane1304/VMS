@@ -42,11 +42,11 @@ module.exports = function(app){
                 from: process.env.GMAIL_ID,
                 to: user.email,
                 subject: 'Thanks for your Visit',
-                // text: 'Thanks for registration',
+                text: 'Thanks for visiting the building.\nYour username has been deactivated successfully\nYou can no logner use your username and password to login to your profile',
                 attachDataUrls: true,
-                html:'<b>Thanks for visiting the building.</b>'+
-                     'Your username has been deactivated successfully<br>'+
-                     'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+                // html:'<b>Thanks for visiting the building.</b>'+
+                //      'Your username has been deactivated successfully<br>'+
+                //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
               };
 
               transporter.sendMail(mailOptions, function(error, info){
