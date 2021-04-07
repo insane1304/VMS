@@ -50,7 +50,7 @@ module.exports = function(app){
                   }
 
                   // res.render("visitor_profile.ejs",{Visitor_Name:req.user.name,visitor:user,message:req.session.message});
-                  res.redirect(/profile);
+                  res.redirect("/profile");
 
 
                     };
