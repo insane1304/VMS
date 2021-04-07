@@ -28,8 +28,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-// mongoose.connect("mongodb://localhost:27017/todo",{useNewUrlParser:true, useUnifiedTopology: true });
-mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/todo",{useNewUrlParser:true, useUnifiedTopology: true });
+// mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -214,13 +214,19 @@ app.post("/signup",function(req,res)
               from: process.env.GMAIL_ID,
               to: vEmail,
               subject: 'Registration on VMS',
-              // text: 'Thanks for registration',
+              text: 'Thanks for registration. You have successfully registered.\nYour username is: '+vId+'\nYou can now use your username and password to login to your profile.\nBelow is your QR code. You need to scan this QR to have access to the building' ,
               attachDataUrls: true,
-              html:'<b>You have successfully registered. </b>'+
-                   'Your username is:<b> '+vId+'</b>'+
-                   ' You can now use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'+
-                   ' Below is your QR code. You need to scan this QR to have access to the building<br>'+
-                   '<img src="'+img+'">'
+              attachments:[
+                {
+                  filename:"qrcode.png",
+                  path:img,
+                }
+              ]
+              // html:'<b>You have successfully registered. </b>'+
+              //      'Your username is:<b> '+vId+'</b>'+
+              //      ' You can now use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'+
+              //      ' Below is your QR code. You need to scan this QR to have access to the building<br>'+
+              //      '<img src="'+img+'">'
             };
 
             transporter.sendMail(mailOptions, function(error, info){
