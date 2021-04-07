@@ -47,7 +47,7 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link  navbar-ic-position " id="" href=""   style="  color: white;">Home</a>
-      <!-- <a class="nav-item nav-link navbar-ic-position"   href="login">login</a> -->
+      <a class="nav-item nav-link navbar-ic-position"  style="  color: white;" href="logout">Logout</a>
     <!-- <a class="nav-item nav-link navbar-ic-position active"  href="signup">signup</a> -->
         <a class="nav-item nav-link navbar-ic-position active"  href="profile"  style="  color: white;">Profile</a>
  <!-- <div><button onclick="myFunction()"class="btn btn-primary">dark mode</button></div> -->
@@ -116,7 +116,7 @@
  <!-- Stream video via webcam -->
 
  <video id="video" width=300 height=300 playsinline controls autoplay></video>
-<canvas id="canvas" width="640" height="480"></canvas>
+<canvas id="canvas" width="300" height="300"></canvas>
 
 </div>
 <div class="" >
@@ -226,7 +226,7 @@ const errorMsgElement = document.querySelector('span#errorMsg');
 const constraints = {
   audio: false,
   video: {
-    width: 400, height: 400
+    width: 300, height: 300
   }
 };
 
@@ -252,7 +252,7 @@ init();
 // Draw image
 var context = canvas.getContext('2d');
 snap.addEventListener("click", function() {
-    context.drawImage(video, 0, 0, 640, 480);
+    context.drawImage(video, 0, 0, 300, 300);
     var image = new Image();
 image.id = "pic";
 image.src = canvas.toDataURL();
@@ -262,15 +262,23 @@ button.textContent = 'Upload Image'
 document.body.appendChild(button)
 
 });
-function upload(){
+async function upload(){
   const ref = firebase.storage().ref();
-  const d=new Date() + '-' + 'base64';
+
+  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = ' ';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < 30; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+  // const d=new Date() + '-' + 'base64';
   var src = canvas.toDataURL();
-  ref.child(d).putString(src, 'data_url').then(function(snapshot) {
+  ref.child(result).putString(src, 'data_url').then(function(snapshot) {
   console.log('Uploaded a data_url string!');
+  console.log(result);
   // console.log(src);
   const storage = firebase.storage();
-  storage.ref(d).getDownloadURL()
+  storage.ref(result).getDownloadURL()
     .then((url) => {
       // console.log(url);
       document.getElementById("url").value=url;
