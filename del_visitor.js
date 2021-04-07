@@ -40,13 +40,13 @@ module.exports = function(app){
               });
               var mailOptions = {
                 from: process.env.GMAIL_ID,
-                to: req.body.username.email,
+                to: user.email,
                 subject: 'Thanks for your Visit',
                 // text: 'Thanks for registration',
                 attachDataUrls: true,
-                html:'<b>Thanks for visiting the building.</b>\n'+
-                     'Your username has been deactivated successfully'+'\n'+
-                     'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>\n'
+                html:'Thanks for visiting the building.'+
+                     'Your username has been deactivated successfully<br>'+
+                     'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
               };
 
               transporter.sendMail(mailOptions, function(error, info){

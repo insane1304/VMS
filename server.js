@@ -216,15 +216,11 @@ app.post("/signup",function(req,res)
               subject: 'Registration on VMS',
               // text: 'Thanks for registration',
               attachDataUrls: true,
-              html:'<b>You have successfully registered.</b>\n'+
-                   'Your username is:<b> '+vId+'</b>\n'+
-                   'You can now use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>\n'+
-                   'Below is your QR code. You need to scan this QR to have access to the building'+
+              html:'<b>You have successfully registered.</b>'+
+                   'Your username is:<b> '+vId+'</b>'+
+                   'You can now use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'+
+                   'Below is your QR code. You need to scan this QR to have access to the building<br>'+
                    '<img src="'+img+'">'
-              // attachments:[{
-              //   path:__dirname+'/website-design-ideas-start-with-grayscale-768x530.jpg',
-              //   // path:__dirname+'/'
-              // }]
             };
 
             transporter.sendMail(mailOptions, function(error, info){
