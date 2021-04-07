@@ -90,12 +90,12 @@
   <section>
     <div class="container" style="width: 90%;" id="head-color">
       <form>
-        <p style="font-size: 40px">Visitor Details</p>
+        <p style="font-size: 40px">User Details</p>
         <!-- <br> -->
         <div class="form-group">
 
           <% if(visitor.username!=""){ %>
-            <label for="pic">visitor pic</label>
+            <label for="pic">User Pic</label>
            <div class="">
             <img  name="pic" style="align: center;  margin: auto;padding: 10px;height: 150px;width:150px" src="<%= visitor.url %>" alt="">
           </div>
@@ -104,7 +104,7 @@
 
       <!-- <br> -->
         <div class="form-group">
-          <label for="visitor_id">visitor_id</label>
+          <label for="visitor_id">User_id</label>
         </div>
         <input name="username" type="text" class="form-control" id="visitor_id" value="<%= visitor.username %>" readonly style="color: black;">
 
