@@ -93,8 +93,9 @@
         <p style="font-size: 40px">Visitor Details</p>
         <!-- <br> -->
         <div class="form-group">
-          <label for="pic">visitor_id</label>
+
           <% if(visitor.username!=""){ %>
+            <label for="pic">visitor pic</label>
            <div class="">
             <img  name="pic" style="align: center;  margin: auto;padding: 10px;height: 150px;width:150px" src="<%= visitor.url %>" alt="">
           </div>
