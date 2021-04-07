@@ -2,6 +2,7 @@
 const mongoose =require("mongoose");
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
+const nodemailer = require('nodemailer');
 var QRCode = require('qrcode')
 module.exports = function(app){
 
@@ -30,6 +31,31 @@ module.exports = function(app){
         {
           var d=new Date(Date.now());
             User.updateOne({username:req.body.username},{status:"Inactive",outDate:d},function(){
+              var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: process.env.GMAIL_ID,
+                  pass: process.env.GMAIL_PASS
+                }
+              });
+              var mailOptions = {
+                from: process.env.GMAIL_ID,
+                to: req.body.username.email,
+                subject: 'Thanks for your Visit',
+                // text: 'Thanks for registration',
+                attachDataUrls: true,
+                html:'<b>Thanks for visiting the building.</b>\n'+
+                     'Your username has been deactivated successfully'+'\n'+
+                     'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>\n'
+              };
+
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
                   User.find({username:{ $regex: /^v/ }},function(err,check){
                   if(err)
                   console.log(err);
