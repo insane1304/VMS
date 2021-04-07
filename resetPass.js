@@ -66,6 +66,10 @@ module.exports = function(app){
                 var vAadhar=check.aadhar
                 var vSex=check.sex;
                 var vStatus=check.status;
+                var vurl=check.url;
+                var vinDate=check.inDate;
+
+                var voutDate=check.outDate;
 
                 User.deleteOne({username:req.body.username},function(err){
                   if(err)
@@ -79,7 +83,10 @@ module.exports = function(app){
                       mobile: vMobile,
                       aadhar: vAadhar,
                       status: vStatus,
-                      forgetPass:undefined
+                      forgetPass:undefined,
+                      url: vurl,
+                      inDate:vinDate,
+                      outDate:voutDate,
                     },function(err){
                       if(err)
                       console.log(err);
