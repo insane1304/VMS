@@ -286,13 +286,13 @@
       console.log('Uploaded a data_url string!');
       console.log(result);
       // console.log(src);
-      // const storage = firebase.storage();
-      // storage.ref(result).getDownloadURL()
-      //   .then((url) => {
-      //     // console.log(url);
-      //     document.getElementById("url").value = url;
-      //
-      //   })
+      const storage = firebase.storage();
+      storage.ref(result).getDownloadURL()
+        .then((url) => {
+          // console.log(url);
+          document.getElementById("url").value = url;
+
+        })
       // console.log(d.getDownloadURL());
       alert("Image Uploaded")
       document.getElementById("submit-button").disabled=false;
