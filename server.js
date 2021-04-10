@@ -158,6 +158,7 @@ cron.schedule('0 0 0 * * *', () => {
             var sDate=check[i].inDate.slice(10,12);
             var year=Number(sYear);
             var month=Number(sMonth);
+            month=month-1;
             var date=Number(sDate);
 
             var compare = new Date(year,month,date);
