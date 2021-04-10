@@ -133,7 +133,7 @@ async function findVisitor() {
 // today = yyyy + '-' + mm + '-' + dd;
 // console.log(today);
 
-cron.schedule('0 8 1 * * *', () => {
+cron.schedule('0 12 1 * * *', () => {
   updateStatus();
   async function updateStatus() {
     await User.find({
@@ -227,7 +227,7 @@ cron.schedule('0 8 1 * * *', () => {
   };
 }, {
   scheduled: true,
-  timezone: process.env.TZ
+  timezone: "Asia/Kolkata"
 });
 
 require('./login')(app);
