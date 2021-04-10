@@ -31,11 +31,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-// mongoose.connect("mongodb://localhost:27017/todo", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
-mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/todo", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+// mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -119,21 +119,21 @@ async function findVisitor() {
 //       console.log(err);
 //   }
 // });
-var today = new Date(Date.now());
-var dd = today.getDate();
-var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
-var yyyy = today.getFullYear();
-if (dd < 10) {
-  dd = '0' + dd
-}
-if (mm < 10) {
-  mm = '0' + mm
-}
+// var today = new Date(Date.now());
+// var dd = today.getDate();
+// var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+// var yyyy = today.getFullYear();
+// if (dd < 10) {
+//   dd = '0' + dd
+// }
+// if (mm < 10) {
+//   mm = '0' + mm
+// }
+//
+// today = yyyy + '-' + mm + '-' + dd;
+// console.log(today);
 
-today = yyyy + '-' + mm + '-' + dd;
-console.log(today);
-
-cron.schedule('0 15 0 * * *', () => {
+cron.schedule('0 0 0 * * *', () => {
   updateStatus();
   async function updateStatus() {
     await User.find({
@@ -148,71 +148,78 @@ cron.schedule('0 15 0 * * *', () => {
       } else {
 
         var today = new Date(Date.now());
-        today.setHours(0, 0, 0, 0);
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+          dd = '0' + dd
+        }
+        if (mm < 10) {
+          mm = '0' + mm
+        }
+
+        today = yyyy + '-' + mm + '-' + dd;
+        console.log(today);
+
+        // today.setHours(0, 0, 0, 0);
 
 
         if (check.length > 0) {
           for (var i = 0; i < check.length; i++) {
-            var sYear=check[i].inDate.slice(0,4);
-            var sMonth=check[i].inDate.slice(6,8);
-            var sDate=check[i].inDate.slice(10,12);
-            var year=Number(sYear);
-            var month=Number(sMonth);
-            month=month-1;
-            var date=Number(sDate);
 
-            var compare = new Date(year,month,date);
-            compare.setHours(0, 0, 0, 0);
+            console.log(today)
+            var compare = check[i].inDate;
             if (compare == today) {
+              var name = check[i].username;
+              var email = check[i].email;
+              User.updateOne({
+                username: check[i].username
+              }, {
+                status: "active"
+              }, function(err) {
+                if (err)
+                  console.log(err);
+                else {
+                  console.log(name);
+                  console.log(email);
 
-              update();
-              async function update() {
-                await User.updateOne({
-                  username: check[i].username
-                }, {
-                  status: "active"
-                }, function(err) {
-                  if (err)
-                    console.log(err);
-                  else {
-                    QRCode.toDataURL(check[i].username, function(err, img) {
-                      var transporter = nodemailer.createTransport({
-                        service: 'gmail',
-                        auth: {
-                          user: process.env.GMAIL_ID,
-                          pass: process.env.GMAIL_PASS
-                        }
-                      });
+                  QRCode.toDataURL(name, function(err, img) {
+                    var transporter = nodemailer.createTransport({
+                      service: 'gmail',
+                      auth: {
+                        user: process.env.GMAIL_ID,
+                        pass: process.env.GMAIL_PASS
+                      }
+                    });
 
-                      var mailOptions = {
-                        from: process.env.GMAIL_ID,
-                        to: check[i].email,
-                        subject: 'Status Update',
-                        text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + username + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
-                        attachDataUrls: true,
-                        // html:'<b>Thanks for visiting the building.</b>'+
-                        //      'Your username has been deactivated successfully<br>'+
-                        //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
-                      };
+                    var mailOptions = {
+                      from: process.env.GMAIL_ID,
+                      to: email,
+                      subject: 'Status Update',
+                      text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + username + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
+                      attachDataUrls: true,
+                      attachments: [{
+                        filename: "qrcode.png",
+                        path: img,
+                      }]
+                      // html:'<b>Thanks for visiting the building.</b>'+
+                      //      'Your username has been deactivated successfully<br>'+
+                      //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+                    };
 
-                      transporter.sendMail(mailOptions, function(error, info) {
-                        if (error) {
-                          console.log(error);
-                        } else {
-                          console.log('Email sent: ' + info.response);
-                        }
-                      });
+                    transporter.sendMail(mailOptions, function(error, info) {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        console.log('Email sent: ' + info.response);
+                      }
+                    });
 
-                    })
-                  }
-
-
-                })
-
-              }
+                  })
+                }
+              })
             }
           }
-
         }
         return;
       }
@@ -220,7 +227,7 @@ cron.schedule('0 15 0 * * *', () => {
   };
 }, {
   scheduled: true,
-  timezone: process.env.TZ
+  timezone: "Asia/Kolkata"
 });
 
 require('./login')(app);
