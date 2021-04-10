@@ -369,7 +369,7 @@ app.post("/signup", function(req, res) {
             intro: 'Registration Success',
             message: 'Visitor registered successfully'
           }
-          res.render("signup.ejs", {
+          res.render("login.ejs", {
             message: req.session.message
           });
         }
