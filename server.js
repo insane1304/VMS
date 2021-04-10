@@ -31,11 +31,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-mongoose.connect("mongodb://localhost:27017/todo", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-// mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
+// mongoose.connect("mongodb://localhost:27017/todo", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -133,7 +133,7 @@ async function findVisitor() {
 // today = yyyy + '-' + mm + '-' + dd;
 // console.log(today);
 
-cron.schedule('0 0 0 * * *', () => {
+cron.schedule('0 8 1 * * *', () => {
   updateStatus();
   async function updateStatus() {
     await User.find({
@@ -227,7 +227,7 @@ cron.schedule('0 0 0 * * *', () => {
   };
 }, {
   scheduled: true,
-  timezone: "Asia/Kolkata"
+  timezone: process.env.TZ
 });
 
 require('./login')(app);
