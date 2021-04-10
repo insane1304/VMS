@@ -133,7 +133,7 @@ async function findVisitor() {
 // today = yyyy + '-' + mm + '-' + dd;
 // console.log(today);
 
-cron.schedule('0 26 1 * * *', () => {
+cron.schedule('0 0 0 * * *', () => {
   updateStatus();
   async function updateStatus() {
     await User.find({
