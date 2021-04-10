@@ -133,7 +133,7 @@ if (mm < 10) {
 today = yyyy + '-' + mm + '-' + dd;
 console.log(today);
 
-cron.schedule('0 0 0 * * *', () => {
+cron.schedule('0 15 0 * * *', () => {
   updateStatus();
   async function updateStatus() {
     await User.find({
