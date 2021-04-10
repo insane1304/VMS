@@ -55,7 +55,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
 
-
+            <a class="nav-item nav-link navbar-ic-position" href="profile" style="  color: white;">Profile</a>
             <a class="nav-item nav-link navbar-ic-position" href="pendingRequests" style="  color: white;">Pending Requests</a>
             <a class="nav-item nav-link navbar-ic-position" href="logout" style="  color: white;">Logout</a>
 
@@ -66,8 +66,9 @@
     </nav>
     </div>
   </header>
+
 <br>
-  <h1 style="text-align: center;  margin: auto;padding: 10px;">Admin Profile </h1>
+  <h1 style="text-align: center;  margin: auto;">Active Users </h1>
   <h1 style="text-align: right;  margin: auto;padding: 10px;"><%= Admin_Name %> </h1>
 
 
@@ -81,7 +82,7 @@
         <div class="input-group mb-3 container">
           <input name="username" id="user_id_input" type="text" class="form-control" placeholder="User_id" aria-label="User_id" aria-describedby="basic-addon2">
           <div class="input-group-append">
-            <button formmethod="post" formaction="search_visitor" onclick="" class="btn btn-primary ">Search</button>
+            <button formmethod="post" formaction="search_pending" onclick="" class="btn btn-primary ">Search</button>
           </div>
 
       </form>
@@ -142,12 +143,12 @@
 
 
         <div class="form-group">
-          <label for="exampleInputEmail1">duration of stay</label>
+          <label for="exampleInputEmail1">Visiting time</label>
 
           <div class="input-group">
             <input type="text" class="form-control" placeholder="visiting time" value="<%= visitor.inDate %>" readonly style="color: black;"/>
-            <span class="input-group-addon">-</span>
-            <input type="text" class="form-control" placeholder="leaving time" value="<%= visitor.outDate %>" readonly style="color: black;"/>
+            <!-- <span class="input-group-addon">-</span>
+            <input type="text" class="form-control" placeholder="leaving time" value="<%= visitor.outDate %>" readonly style="color: black;"/> -->
           </div>
 
 
@@ -158,8 +159,9 @@
 
       <div class="row">
         <div class="col-sm-12 text-center">
-          <button formaction="visitor_update_by_admin" formmethod="post" onclick="" class="btn btn-primary btn-md">Update</button>
-          <button formaction="del_visitor" formmethod="post" onclick="" class="btn btn-primary btn-md">Deactivate</button>
+          <button formaction="accept_request" formmethod="post" onclick="" class="btn btn-primary btn-md">Accept</button>
+          <button formaction="instant_accept" formmethod="post" onclick="" class="btn btn-primary btn-md">Instant Accept</button>
+          <button formaction="del_request" formmethod="post" onclick="" class="btn btn-primary btn-md">DeLete Request</button>
         </div>
       </div>
 
@@ -181,7 +183,7 @@
             <th scope="col">address</th>
             <th scope="col">status</th>
             <th scope="col">visiting time</th>
-            <th scope="col">leaving time</th>
+            <!-- <th scope="col">leaving time</th> -->
 
           </tr>
         </thead>
@@ -198,7 +200,7 @@
             <td><%= details[i].address %></td>
             <td><%= details[i].status %></td>
             <td><%= details[i].inDate %></td>
-            <td><%= details[i].outDate %></td>
+            <!-- <td><%= details[i].outDate %></td> -->
 
           </tr>
 
@@ -251,7 +253,7 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/script.js"></script>
   <script src="js/ajax-utils.js"></script>
-  <script src="public/js/admin.js"></script>
+  <script src="js/admin.js"></script>
 
 </body>
 

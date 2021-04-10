@@ -68,7 +68,10 @@
     </nav>
     </div>
   </header>
-
+<br>
+<h1 style="text-align: right;  margin: auto;padding: 10px; ">
+  Visitor Profile
+</h1>
   <h1 style="text-align: right;  margin: auto;padding: 10px; ">
     <%= Visitor_Name %>
   </h1>
@@ -76,8 +79,9 @@
     <img  style="text-align: right;  margin: auto; margin-right: 10px; padding: 20px; height: 200px; width:200px; display:block"src="<%= visitor.url %>" alt="">
   </div>
 
-  <h4 style="text-align: center;  margin: auto;padding: 10px; "> Scan for Entry</h1>
-  </h4>
+  <h3 style="text-align: center;  margin: auto;padding: 10px; ">Status: <%= visitor.status %></h3>
+
+  <h4 style="text-align: center;  margin: auto;padding: 10px; "> Scan for Entry</h4>
 
 <div  style="text-align: center;  margin: auto;padding: 10px; " class="">
   <img src="<%= qr_code %>" alt="">

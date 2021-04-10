@@ -12,6 +12,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const crypto = require('crypto');
 var flash = require('express-flash');
 var QRCode = require('qrcode')
+var cron = require('node-cron');
 const app=express();
 
 app.use(express.static("public"));
@@ -113,6 +114,74 @@ async function findVisitor(){
 //       console.log(err);
 //   }
 // });
+cron.schedule('0 0 0 * * *', () => {
+  updateStatus();
+  async function updateStatus(){
+    await User.find({username:{ $regex: /^v/ }},function(err,check){
+
+      if(err)
+      {
+        console.log(err);
+      }
+      else{
+        if(check.length>0)
+        {
+          for(var i=0;i<check.length;i++)
+          {
+              if(check[i].status=="approved")
+              {
+                update();
+                async function update(){
+                await User.updateOne({username:check[i].username},{status:"active"},function(err){
+                  if(err)
+                  console.log(err);
+                  else
+                  {
+                    QRCode.toDataURL(check[i].username,function(err,img){
+                    var transporter = nodemailer.createTransport({
+                      service: 'gmail',
+                      auth: {
+                        user: process.env.GMAIL_ID,
+                        pass: process.env.GMAIL_PASS
+                      }
+                    });
+
+                    var mailOptions = {
+                      from: process.env.GMAIL_ID,
+                      to: check[i].email,
+                      subject: 'Status Update',
+                      text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( '+username+' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
+                      attachDataUrls: true,
+                      // html:'<b>Thanks for visiting the building.</b>'+
+                      //      'Your username has been deactivated successfully<br>'+
+                      //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+                    };
+
+                    transporter.sendMail(mailOptions, function(error, info){
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        console.log('Email sent: ' + info.response);
+                      }
+                    });
+
+                  })
+                }
+
+
+                })
+              }
+              }
+          }
+        }
+        return;
+      }
+    })
+  };
+ }, {
+   scheduled: true,
+   timezone: process.env.TZ
+ });
 
 require('./login')(app);
 
@@ -134,20 +203,27 @@ require('./forgetPass')(app);
 
 require('./resetPass')(app);
 
+require('./pendingRequests')(app);
 
+require('./accept_request')(app);
+
+require('./instant_accept')(app);
+
+require('./del_request')(app);
+
+require('./search_pending')(app);
 
 
 
 //SIGNUP
 app.get("/signup",function(req,res){
-  if(req.isAuthenticated() && req.user.username[0]=="a")
+  if(req.isAuthenticated() )
   {
-    // console.log(req.user.username);
-    res.render("signup.ejs");
+    res.redirect("/profile");
   }
   else
   {
-    res.redirect("/login");
+    res.render("signup.ejs");
   }
 
 });
@@ -188,7 +264,7 @@ app.post("/signup",function(req,res)
         email: vEmail,
         mobile: vMobile,
         aadhar: vAadhar,
-        status: "active",
+        status: "pending",
         forgetPass:undefined,
         inDate:d,
         outDate:"",
@@ -214,7 +290,7 @@ app.post("/signup",function(req,res)
               from: process.env.GMAIL_ID,
               to: vEmail,
               subject: 'Registration on VMS',
-              text: 'Thanks for registration. You have successfully registered. Your username is: '+vId+'. You can now use your username and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/\nBelow is your QR code. You need to scan this QR to have access to the building' ,
+              text: 'Thanks for registration. You have successfully registered. Your username is: '+vId+'. Your current request to visit is pending. We will keep you updated. You can also check your status at your profile. You can use your username and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/\n Below is your QR code. You will need to scan this QR to have access to the building once your request is approved and status is set as "active"' ,
               attachDataUrls: true,
               attachments:[
                 {
@@ -222,11 +298,6 @@ app.post("/signup",function(req,res)
                   path:img,
                 }
               ]
-              // html:'<b>You have successfully registered. </b>'+
-              //      'Your username is:<b> '+vId+'</b>'+
-              //      ' You can now use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'+
-              //      ' Below is your QR code. You need to scan this QR to have access to the building<br>'+
-              //      '<img src="'+img+'">'
             };
 
             transporter.sendMail(mailOptions, function(error, info){
@@ -236,18 +307,38 @@ app.post("/signup",function(req,res)
                 console.log('Email sent: ' + info.response);
               }
             });
+          })
+
+              var mailOptions = {
+                from: process.env.GMAIL_ID,
+                to: process.env.GMAIL_ID,
+                subject: 'New pending request',
+                text: 'A new visit request has been made under the user id: '+vId+'. Kindly verify the request and update the same from the Pending Requests section of your profile' ,
+                attachDataUrls: true,
+
+              };
+
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+
+
             req.session.message={
               type:'success',
               intro:'Registration Success',
               message:'Visitor registered successfully'
             }
             res.render("signup.ejs",{message:req.session.message});
-          })
-        }
+          }
+        });
+      }
       });
 
-    }
-  });
+
 
 });
 

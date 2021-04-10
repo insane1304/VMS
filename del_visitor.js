@@ -27,7 +27,7 @@ module.exports = function(app){
         console.log(err)
       }
       else{
-        if(user)
+        if(user && user.status=="active")
         {
           var d=new Date(Date.now());
             User.updateOne({username:req.body.username},{status:"Inactive",outDate:d},function(){
@@ -42,7 +42,7 @@ module.exports = function(app){
                 from: process.env.GMAIL_ID,
                 to: user.email,
                 subject: 'Thanks for your Visit',
-                text: 'Thanks for visiting the building. Your username has been deactivated successfully\nYou can no longer use your username and password to login to your profile',
+                text: 'Thanks for visiting the building. Your username has been deactivated successfully\nYou can no longer use your username and password to login to your profile.\nVMS: https://vms-sasy.herokuapp.com/',
                 attachDataUrls: true,
                 // html:'<b>Thanks for visiting the building.</b>'+
                 //      'Your username has been deactivated successfully<br>'+
@@ -101,10 +101,7 @@ module.exports = function(app){
                     "password":"",
                     "status":""
                   };
-                  User.find({username:{ $regex: /^v/ }},function(err,check){
-                    if(err)
-                    console.log(err);
-                    else{
+
                       req.session.message={
                         type:'danger',
                         intro:'Invalid ID',
@@ -112,8 +109,7 @@ module.exports = function(app){
                       }
                         res.render("admin_profile.ejs",{Admin_Name:req.user.name,details:check,visitor:user,message:req.session.message});
                         // res.alert("NOT VALID ID")
-                    }
-                  });
+
                   // res.alert("Enter valid id");
 
                 }
