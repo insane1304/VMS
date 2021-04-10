@@ -109,6 +109,10 @@
           <input name="pass" type="password" class="form-control" id="exampleInputPassword1" required>
         </div>
 
+        <div class="form-group">
+          <label for="date">Visiting Date</label>
+          <input name="date" type="date" class="form-control" id="date"  pattern="\d{2}-\d{2}-\d{4}" required>
+        </div>
 
         <div class="container" style="margin-left: auto , margin-right: auto;">
           <button class="btn btn-primary" style="margin-bottom: 10px;" id="snap">Capture</button>
@@ -282,13 +286,13 @@
       console.log('Uploaded a data_url string!');
       console.log(result);
       // console.log(src);
-      const storage = firebase.storage();
-      storage.ref(result).getDownloadURL()
-        .then((url) => {
-          // console.log(url);
-          document.getElementById("url").value = url;
-
-        })
+      // const storage = firebase.storage();
+      // storage.ref(result).getDownloadURL()
+      //   .then((url) => {
+      //     // console.log(url);
+      //     document.getElementById("url").value = url;
+      //
+      //   })
       // console.log(d.getDownloadURL());
       alert("Image Uploaded")
       document.getElementById("submit-button").disabled=false;

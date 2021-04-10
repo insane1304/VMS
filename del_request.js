@@ -27,8 +27,21 @@ module.exports = function(app){
      else{
        if(user && user.status=="pending")
        {
-         var d=new Date(Date.now());
-           User.updateOne({username:req.body.username},{status:"Inactive",outDate:d},function(){
+
+         var today=new Date(Date.now());
+         var dd = today.getDate();
+         var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+         var yyyy = today.getFullYear();
+         if(dd<10){
+           dd='0'+dd
+         }
+         if(mm<10){
+           mm='0'+mm
+         }
+
+         today = yyyy+'-'+mm+'-'+dd;
+         console.log(today);
+           User.updateOne({username:req.body.username},{status:"Inactive",outDate:today},function(){
              var transporter = nodemailer.createTransport({
                service: 'gmail',
                auth: {
