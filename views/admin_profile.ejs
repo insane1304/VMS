@@ -140,6 +140,10 @@
           <label for="status">card status</label>
           <input name="status" type="text" class="form-control" id="address" value="<%= visitor.status %>" readonly style="color: black;">
         </div>
+        <div class="form-group">
+          <label for="status">requested date</label>
+          <input name="status" type="text" class="form-control" id="reqDate" value="<%= visitor.reqDate %>" readonly style="color: black;">
+        </div>
 
 
         <div class="form-group">
@@ -159,6 +163,7 @@
 
       <div class="row">
         <div class="col-sm-12 text-center">
+          <button formaction="checkin" formmethod="post" onclick="" class="btn btn-primary btn-md">Activate</button>
           <button id="update-button" formaction="visitor_update_by_admin" formmethod="post" onclick="" class="btn btn-primary btn-md">Update</button>
           <button formaction="del_visitor" formmethod="post" onclick="" class="btn btn-primary btn-md">Deactivate</button>
         </div>
