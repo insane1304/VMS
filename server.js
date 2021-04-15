@@ -180,61 +180,61 @@ cron.schedule('0 0 0 * * *', () => {
         // today.setHours(0, 0, 0, 0);
 
 
-        if (check.length > 0) {
-          for (var i = 0; i < check.length; i++) {
-
-            console.log(today)
-            var compare = check[i].reqDate;
-            if (compare == today) {
-              var name = check[i].username;
-              var email = check[i].email;
-              User.updateOne({
-                username: check[i].username
-              }, {
-                status: "active"
-              }, function(err) {
-                if (err)
-                  console.log(err);
-                else {
-                  console.log(name);
-                  console.log(email);
-
-                  QRCode.toDataURL(name, function(err, img) {
-                    var transporter = nodemailer.createTransport({
-                      service: 'gmail',
-                      auth: {
-                        user: process.env.GMAIL_ID,
-                        pass: process.env.GMAIL_PASS
-                      }
-                    });
-
-                    var mailOptions = {
-                      from: process.env.GMAIL_ID,
-                      to: email,
-                      subject: 'Status Update',
-                      text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + name + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
-                      attachDataUrls: true,
-                      attachments: [{
-                        filename: "qrcode.png",
-                        path: img,
-                      }]
-                      // html:'<b>Thanks for visiting the building.</b>'+
-                      //      'Your username has been deactivated successfully<br>'+
-                      //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
-                    };
-
-                    transporter.sendMail(mailOptions, function(error, info) {
-                      if (error) {
-                        console.log(error);
-                      } else {
-                        console.log('Email sent: ' + info.response);
-                      }
-                    });
-
-                  })
-                }
-              })
-            }
+        // if (check.length > 0) {
+        //   for (var i = 0; i < check.length; i++) {
+        //
+        //     console.log(today)
+        //     var compare = check[i].reqDate;
+        //     if (compare == today) {
+        //       var name = check[i].username;
+        //       var email = check[i].email;
+        //       User.updateOne({
+        //         username: check[i].username
+        //       }, {
+        //         status: "active"
+        //       }, function(err) {
+        //         if (err)
+        //           console.log(err);
+        //         else {
+        //           console.log(name);
+        //           console.log(email);
+        //
+        //           QRCode.toDataURL(name, function(err, img) {
+        //             var transporter = nodemailer.createTransport({
+        //               service: 'gmail',
+        //               auth: {
+        //                 user: process.env.GMAIL_ID,
+        //                 pass: process.env.GMAIL_PASS
+        //               }
+        //             });
+        //
+        //             var mailOptions = {
+        //               from: process.env.GMAIL_ID,
+        //               to: email,
+        //               subject: 'Status Update',
+        //               text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + name + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
+        //               attachDataUrls: true,
+        //               attachments: [{
+        //                 filename: "qrcode.png",
+        //                 path: img,
+        //               }]
+        //               // html:'<b>Thanks for visiting the building.</b>'+
+        //               //      'Your username has been deactivated successfully<br>'+
+        //               //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+        //             };
+        //
+        //             transporter.sendMail(mailOptions, function(error, info) {
+        //               if (error) {
+        //                 console.log(error);
+        //               } else {
+        //                 console.log('Email sent: ' + info.response);
+        //               }
+        //             });
+        //
+        //           })
+        //         }
+        //       })
+        //     }
 
             var compare = check[i].reqDate;
             if (compare == valid && check[i].inDate=="") {
