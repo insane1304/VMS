@@ -134,7 +134,7 @@ async function findVisitor() {
 // today = yyyy + '-' + mm + '-' + dd;
 // console.log(today);
 
-cron.schedule('0 0 0 * * *', () => {
+cron.schedule('0 30 0 * * *', () => {
   updateStatus();
   async function updateStatus() {
     await User.find({
@@ -163,7 +163,7 @@ cron.schedule('0 0 0 * * *', () => {
         today = yyyy + '-' + mm + '-' + dd;
         console.log(today);
 
-        valid.setDate(valid.getDate()-1);
+        valid.setDate(valid.getDate());
         var dd1 = valid.getDate();
         var mm1 = valid.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
         var yyyy1 = valid.getFullYear();
