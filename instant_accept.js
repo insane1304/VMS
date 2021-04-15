@@ -18,7 +18,12 @@ module.exports = function(app){
   });
   app.post("/instant_accept",function(req,res){
   // console.log(req.user.username);
-   var username=req.body.username;
+   var username=req.body.instant_accept;
+
+   var x=new Date(Date.now());
+   x.setMilliseconds(0);
+   today=x.toLocaleString();
+
    User.findOne({username:username},function(err,user){
      if(err)
      {
@@ -27,7 +32,7 @@ module.exports = function(app){
      else{
        if(user && user.status=="pending")
        {
-           User.updateOne({username:req.body.username},{status:"active"},function(){
+           User.updateOne({username:req.body.instant_accept},{status:"active",inDate:today},function(){
              QRCode.toDataURL(username,function(err,img){
              var transporter = nodemailer.createTransport({
                service: 'gmail',
@@ -40,7 +45,7 @@ module.exports = function(app){
                from: process.env.GMAIL_ID,
                to: user.email,
                subject: 'Status Update',
-               text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( '+username+' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
+               text: 'Your Visit has been Confirmed!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( '+username+' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
                attachDataUrls: true,
                attachments:[
                  {
@@ -71,23 +76,13 @@ module.exports = function(app){
                      }
                    }
                    // console.log(user.email);
-                   user={
-                     "name":"",
-                     "sex":"",
-                     "username":"",
-                     "address":"",
-                     "email":"",
-                     "mobile":"",
-                     "aadhar":"",
-                     "password":"",
-                     "status":""
-                   };
+
                    req.session.message={
                      type:'success',
                      intro:'Status Updated',
                      message:'Visitor request accepted. Status set to active.'
                    }
-                   res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,visitor:user,message:req.session.message});
+                   res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,message:req.session.message});
                    // res.redirect("/");
                  }
                })
@@ -108,17 +103,6 @@ module.exports = function(app){
                  pUsers.push(check[item]);
                }
              }
-                 user={
-                   "name":"",
-                   "sex":"",
-                   "username":"",
-                   "address":"",
-                   "email":"",
-                   "mobile":"",
-                   "aadhar":"",
-                   "password":"",
-                   "status":""
-                 };
                  // User.find({username:{ $regex: /^v/ }},function(err,check){
                  //   if(err)
                  //   console.log(err);
@@ -128,7 +112,7 @@ module.exports = function(app){
                        intro:'Invalid ID',
                        message:'Enter valid visitor ID'
                      }
-                       res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:check,visitor:pUsers,message:req.session.message});
+                       res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,message:req.session.message});
                        // res.alert("NOT VALID ID")
                    }
                  });

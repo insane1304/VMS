@@ -32,20 +32,8 @@ module.exports = function(app){
                   pUsers.push(check[item]);
                 }
               }
-                user={
-                  "name":"",
-                  "sex":"",
-                  "username":"",
-                  "address":"",
-                  "email":"",
-                  "mobile":"",
-                  "aadhar":"",
-                  "password":"",
-                  "status":"",
-                  "forgetPass":undefined,
-                };
 
-                res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,visitor:user});
+                res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers});
 
             }
           })

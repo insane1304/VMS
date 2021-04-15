@@ -55,6 +55,7 @@ const usersSchema = new mongoose.Schema({
   forgetPass: String,
   inDate: String,
   outDate: String,
+  reqDate:String,
   url: String
 });
 
@@ -148,6 +149,7 @@ cron.schedule('0 0 0 * * *', () => {
       } else {
 
         var today = new Date(Date.now());
+        var valid = today;
         var dd = today.getDate();
         var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
         var yyyy = today.getFullYear();
@@ -161,6 +163,20 @@ cron.schedule('0 0 0 * * *', () => {
         today = yyyy + '-' + mm + '-' + dd;
         console.log(today);
 
+        valid.setDate(valid.getDate()-2);
+        var dd1 = valid.getDate();
+        var mm1 = valid.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+        var yyyy1 = valid.getFullYear();
+        if (dd1 < 10) {
+          dd1 = '0' + dd1
+        }
+        if (mm1 < 10) {
+          mm1 = '0' + mm1
+        }
+
+        valid = yyyy1 + '-' + mm1 + '-' + dd1;
+        // console.log(today);
+
         // today.setHours(0, 0, 0, 0);
 
 
@@ -168,7 +184,7 @@ cron.schedule('0 0 0 * * *', () => {
           for (var i = 0; i < check.length; i++) {
 
             console.log(today)
-            var compare = check[i].inDate;
+            var compare = check[i].reqDate;
             if (compare == today) {
               var name = check[i].username;
               var email = check[i].email;
@@ -202,6 +218,54 @@ cron.schedule('0 0 0 * * *', () => {
                         filename: "qrcode.png",
                         path: img,
                       }]
+                      // html:'<b>Thanks for visiting the building.</b>'+
+                      //      'Your username has been deactivated successfully<br>'+
+                      //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+                    };
+
+                    transporter.sendMail(mailOptions, function(error, info) {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        console.log('Email sent: ' + info.response);
+                      }
+                    });
+
+                  })
+                }
+              })
+            }
+
+            var compare = check[i].reqDate;
+            if (compare == valid && check[i].inDate=="") {
+              var name = check[i].username;
+              var email = check[i].email;
+              User.updateOne({
+                username: check[i].username
+              }, {
+                status: "Inactive"
+              }, function(err) {
+                if (err)
+                  console.log(err);
+                else {
+                  console.log(name);
+                  console.log(email);
+
+                  QRCode.toDataURL(name, function(err, img) {
+                    var transporter = nodemailer.createTransport({
+                      service: 'gmail',
+                      auth: {
+                        user: process.env.GMAIL_ID,
+                        pass: process.env.GMAIL_PASS
+                      }
+                    });
+
+                    var mailOptions = {
+                      from: process.env.GMAIL_ID,
+                      to: email,
+                      subject: 'Status Update',
+                      text: 'Your Id has been deactivated because of no visit. You can no longer login to your profile. Kindly Register as a new visiter to get a new Visiit Link to VMS is: https://vms-sasy.herokuapp.com/',
+
                       // html:'<b>Thanks for visiting the building.</b>'+
                       //      'Your username has been deactivated successfully<br>'+
                       //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
@@ -313,7 +377,8 @@ app.post("/signup", function(req, res) {
         aadhar: vAadhar,
         status: "pending",
         forgetPass: undefined,
-        inDate: date,
+        inDate: "",
+        reqDate:date,
         outDate: "",
         url: req.body.url
       }, function(err, check) {

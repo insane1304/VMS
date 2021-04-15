@@ -120,7 +120,10 @@
           <button class="btn btn-primary" id="upload-button" style="margin-bottom: 10px;" disabled onclick="upload()">Upload Image</button>
           <!-- Stream video via webcam -->
 
-          <video id="video" width=300 height=300 playsinline controls autoplay></video>
+          <video style=" transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg);
+"id="video" width=300 height=auto  autoplay></video>
           <canvas style="align:center;" id="canvas" width="300" height="300"></canvas>
 
         </div>

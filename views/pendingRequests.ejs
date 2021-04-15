@@ -68,109 +68,11 @@
 
 <br>
   <h1 style="text-align: center;  margin: auto;"> Pending Requests </h1>
-  <h1 style="text-align: right;  margin: auto;padding: 10px;"><%= Admin_Name %> </h1>
-
-
-
-
-  <section>
-    <div class="container" id="" style="width: 90%;">
-
-      <form action="search_visitor" method="post">
-
-        <div class="input-group mb-3 container">
-          <input name="username" id="user_id_input" type="text" class="form-control" placeholder="User_id" aria-label="User_id" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button formmethod="post" formaction="search_pending" onclick="" class="btn btn-primary ">Search</button>
-          </div>
-
-      </form>
-    </div>
-  </section>
-
-
-  <section>
-    <div class="container" style="width: 90%;" id="head-color">
-      <form>
-        <p style="font-size: 40px">User Details</p>
-        <!-- <br> -->
-        <div class="form-group">
-
-          <% if(visitor.username!=""){ %>
-            <label for="pic">User Pic</label>
-           <div class="">
-            <img  name="pic" style="align: center;  margin: auto;padding: 10px;height: 150px;width:150px" src="<%= visitor.url %>" alt="">
-          </div>
-        <% } %>
-        </div>
-
-      <!-- <br> -->
-        <div class="form-group">
-          <label for="visitor_id">User_id</label>
-        </div>
-        <input name="username" type="text" class="form-control" id="visitor_id" value="<%= visitor.username %>" readonly style="color: black;">
-
-        <div class="form-group">
-          <label for="name">name</label>
-          <input name="name" type="text" class="form-control" id="name" value="<%= visitor.name %>">
-        </div>
-
-        <div class="form-group">
-          <label for="sex">sex</label>
-          <input name="sex" type="text" class="form-control" id="sex" value="<%= visitor.sex %>" readonly style="color: black;">
-        </div>
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">email</label>
-          <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<%= visitor.email %>">
-        </div>
-
-        <div class="form-group">
-          <label for="mobile">mobile</label>
-          <input name="mobile" type="text" class="form-control" id="mobile" value="<%= visitor.mobile %>">
-        </div>
-
-        <div class="form-group">
-          <label for="address">address</label>
-          <input name="address" type="text" class="form-control" id="address" value="<%= visitor.address %>">
-        </div>
-
-        <div class="form-group">
-          <label for="status">card status</label>
-          <input name="status" type="text" class="form-control" id="address" value="<%= visitor.status %>" readonly style="color: black;">
-        </div>
-
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">Visiting time</label>
-
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="visiting time" value="<%= visitor.inDate %>" readonly style="color: black;"/>
-            <!-- <span class="input-group-addon">-</span>
-            <input type="text" class="form-control" placeholder="leaving time" value="<%= visitor.outDate %>" readonly style="color: black;"/> -->
-          </div>
-
-
-      </form>
-
-
-      <br>
-
-      <div class="row">
-        <div class="col-sm-12 text-center">
-          <button formaction="accept_request" formmethod="post" onclick="" class="btn btn-primary btn-md">Accept</button>
-          <button formaction="instant_accept" formmethod="post" onclick="" class="btn btn-primary btn-md">Instant Accept</button>
-          <button formaction="del_request" formmethod="post" onclick="" class="btn btn-primary btn-md">DeLete Request</button>
-        </div>
-      </div>
-
-    </div>
-    </div>
-  </section>
-
+  <h1 style="text-align: right;  margin: auto; padding: 10px;"><%= Admin_Name %> </h1>
+  <br>
   <section>
     <div class="">
-      <table class="table container bg-light">
+      <table class="table container bg-light table-hover">
         <thead class="thead-dark">
           <tr>
             <th scope="col">S No.</th>
@@ -181,7 +83,14 @@
             <th scope="col">mobile</th>
             <th scope="col">address</th>
             <th scope="col">status</th>
+            <th scope="col">requested date</th>
             <th scope="col">visiting time</th>
+            <th scope="col">
+              </th>
+            <th scope="col">
+              </th>
+            <th scope="col">
+              </th>
             <!-- <th scope="col">leaving time</th> -->
 
           </tr>
@@ -198,7 +107,23 @@
             <td><%= details[i].mobile %></td>
             <td><%= details[i].address %></td>
             <td><%= details[i].status %></td>
+            <td><%= details[i].reqDate %></td>
             <td><%= details[i].inDate %></td>
+            <td class="align-self-center">
+              <form class="" action="index.html" method="post">
+                <button name="accept_request" formaction="accept_request" formmethod="post" value="<%= details[i].username %>"onclick="" class="btn btn-primary btn-md">Accept</button>
+              </form>
+            </td>
+            <td class="align-self-center">
+              <form class="" action="index.html" method="post">
+              <button name="instant_accept" formaction="instant_accept" formmethod="post" value="<%= details[i].username %>" onclick="" class="btn btn-primary btn-md">Instant Accept</button>
+              </form>
+            </td>
+            <td class="align-self-center">
+              <form class="" action="index.html" method="post">
+              <button name="del_request" formaction="del_request" formmethod="post" onclick="" value="<%= details[i].username %>" class="btn btn-primary btn-md">DeLete Request</button>
+              </form>
+            </td>
             <!-- <td><%= details[i].outDate %></td> -->
 
           </tr>

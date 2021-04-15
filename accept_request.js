@@ -18,7 +18,9 @@ module.exports = function(app){
   });
   app.post("/accept_request",function(req,res){
   // console.log(req.user.username);
-   var username=req.body.username;
+
+   var username=req.body.accept_request;
+   console.log(username);
    User.findOne({username:username},function(err,user){
      if(err)
      {
@@ -27,7 +29,7 @@ module.exports = function(app){
      else{
        if(user && user.status=="pending")
        {
-           User.updateOne({username:req.body.username},{status:"approved"},function(){
+           User.updateOne({username:req.body.accept_request},{status:"approved"},function(){
              var transporter = nodemailer.createTransport({
                service: 'gmail',
                auth: {
@@ -39,7 +41,7 @@ module.exports = function(app){
                from: process.env.GMAIL_ID,
                to: user.email,
                subject: 'Status Update',
-               text: 'Your Visit has been approved!!. Your status wiil be set to as active at 12:00 am on your requested day of visit.\n You can check your status at your profile. You can use your username ( '+username+' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/',
+               text: 'Your Visit has been Confirmed on your requested Date!!.\nYou can check your profile for more details. You can use your username ( '+username+' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/',
                attachDataUrls: true,
                // html:'<b>Thanks for visiting the building.</b>'+
                //      'Your username has been deactivated successfully<br>'+
@@ -66,23 +68,13 @@ module.exports = function(app){
                      }
                    }
                    // console.log(user.email);
-                   user={
-                     "name":"",
-                     "sex":"",
-                     "username":"",
-                     "address":"",
-                     "email":"",
-                     "mobile":"",
-                     "aadhar":"",
-                     "password":"",
-                     "status":""
-                   };
+
                    req.session.message={
                      type:'success',
                      intro:'Status Updated',
                      message:'Visitor request accepted. Status set to approved.'
                    }
-                   res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,visitor:user,message:req.session.message});
+                   res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,message:req.session.message});
                    // res.redirect("/");
                  }
                })
@@ -103,17 +95,6 @@ module.exports = function(app){
                  pUsers.push(check[item]);
                }
              }
-                 user={
-                   "name":"",
-                   "sex":"",
-                   "username":"",
-                   "address":"",
-                   "email":"",
-                   "mobile":"",
-                   "aadhar":"",
-                   "password":"",
-                   "status":""
-                 };
                  // User.find({username:{ $regex: /^v/ }},function(err,check){
                  //   if(err)
                  //   console.log(err);
@@ -123,7 +104,7 @@ module.exports = function(app){
                        intro:'Invalid ID',
                        message:'Enter valid visitor ID'
                      }
-                       res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:check,visitor:pUsers,message:req.session.message});
+                       res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,message:req.session.message});
                        // res.alert("NOT VALID ID")
                    }
                  });

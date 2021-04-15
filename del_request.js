@@ -18,7 +18,7 @@ module.exports = function(app){
   });
   app.post("/del_request",function(req,res){
   // console.log(req.user.username);
-   var username=req.body.username;
+   var username=req.body.del_request;
    User.findOne({username:username},function(err,user){
      if(err)
      {
@@ -28,20 +28,24 @@ module.exports = function(app){
        if(user && user.status=="pending")
        {
 
-         var today=new Date(Date.now());
-         var dd = today.getDate();
-         var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
-         var yyyy = today.getFullYear();
-         if(dd<10){
-           dd='0'+dd
-         }
-         if(mm<10){
-           mm='0'+mm
-         }
+         var x=new Date(Date.now());
 
-         today = yyyy+'-'+mm+'-'+dd;
-         console.log(today);
-           User.updateOne({username:req.body.username},{status:"Inactive",outDate:today},function(){
+         x.setMilliseconds(0);
+         // console.log(x);
+
+         today=x.toLocaleString();
+         // console.log(today);
+
+
+         var nt=new Date(today);
+         var y=nt;
+         // console.log(nt.setMilliseconds(0));
+         // console.log(nt);
+         // if(nt=x)
+         // console.log("MATCHED")
+
+
+         User.updateOne({username:req.body.del_request},{status:"Inactive",outDate:today},function(){
              var transporter = nodemailer.createTransport({
                service: 'gmail',
                auth: {
@@ -80,23 +84,13 @@ module.exports = function(app){
                      }
                    }
                    // console.log(user.email);
-                   user={
-                     "name":"",
-                     "sex":"",
-                     "username":"",
-                     "address":"",
-                     "email":"",
-                     "mobile":"",
-                     "aadhar":"",
-                     "password":"",
-                     "status":""
-                   };
+
                    req.session.message={
                      type:'success',
                      intro:'Status Updated',
                      message:'Visitor Request Declined. Status set to Inactive.'
                    }
-                   res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,visitor:user,message:req.session.message});
+                   res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,message:req.session.message});
                    // res.redirect("/");
                  }
                })
@@ -117,17 +111,6 @@ module.exports = function(app){
                  pUsers.push(check[item]);
                }
              }
-                 user={
-                   "name":"",
-                   "sex":"",
-                   "username":"",
-                   "address":"",
-                   "email":"",
-                   "mobile":"",
-                   "aadhar":"",
-                   "password":"",
-                   "status":""
-                 };
                  // User.find({username:{ $regex: /^v/ }},function(err,check){
                  //   if(err)
                  //   console.log(err);
@@ -137,7 +120,7 @@ module.exports = function(app){
                        intro:'Invalid ID',
                        message:'Enter valid visitor ID'
                      }
-                       res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:check,visitor:pUsers,message:req.session.message});
+                       res.render("pendingRequests.ejs",{Admin_Name:req.user.name,details:pUsers,message:req.session.message});
                        // res.alert("NOT VALID ID")
                    }
                  });
