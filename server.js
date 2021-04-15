@@ -178,8 +178,8 @@ cron.schedule('0 0 0 * * *', () => {
         // console.log(today);
 
         // today.setHours(0, 0, 0, 0);
-
-
+        //
+        //
         // if (check.length > 0) {
         //   for (var i = 0; i < check.length; i++) {
         //
@@ -283,8 +283,8 @@ cron.schedule('0 0 0 * * *', () => {
                 }
               })
             }
-          }
-        }
+
+
         return;
       }
     })
