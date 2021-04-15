@@ -91,7 +91,7 @@
 
   <section>
     <div class="container" style="width: 90%;" id="head-color">
-      <form>
+      <form id="update-form">
         <p style="font-size: 40px">User Details</p>
         <!-- <br> -->
         <div class="form-group">
@@ -126,9 +126,10 @@
         </div>
 
         <div class="form-group">
-          <label for="mobile">mobile</label>
-          <input name="mobile" type="text" class="form-control" id="mobile" value="<%= visitor.mobile %>">
+          <label for="mobile" id="mobile-number">mobile</label>
+          <input id="mobile" name="mobile" type="text" class="form-control" id="mobile" value="<%= visitor.mobile %>">
         </div>
+        <div style="color:red;" id="mobileResponseDiv"></div>
 
         <div class="form-group">
           <label for="address">address</label>
@@ -158,7 +159,7 @@
 
       <div class="row">
         <div class="col-sm-12 text-center">
-          <button formaction="visitor_update_by_admin" formmethod="post" onclick="" class="btn btn-primary btn-md">Update</button>
+          <button id="update-button" formaction="visitor_update_by_admin" formmethod="post" onclick="" class="btn btn-primary btn-md">Update</button>
           <button formaction="del_visitor" formmethod="post" onclick="" class="btn btn-primary btn-md">Deactivate</button>
         </div>
       </div>
@@ -254,6 +255,38 @@
   <script src="js/script.js"></script>
   <script src="js/ajax-utils.js"></script>
   <script src="public/js/admin.js"></script>
+
+  <script >
+  $(document).ready(function () {
+      $("#update-button").click(function (e) {
+          e.preventDefault();
+            var  mobile=$("#mobile").val();
+            console.log(mobile.length);
+
+
+          if(mobile.lentgh=10) {
+              //Submit line commented out for example.  In production, remove the //
+              $("#update-form").attr("action","visitor_update_by_admin");
+              $("#update-form").attr("method","post");
+              $("#update-form").submit();
+
+              //Shows success message and prevents submission.  In production, comment out the next 2 lines.
+              // $("#responseDiv").html("Passwords Match");
+              // return false;
+      }
+      else {
+
+          $("#mobileResponseDiv").html("Incorrect Mobile Number...<br></br>");
+          var x = $("#mobile-number").offset().left;
+          var y = $("#mobile-number").offset().top;
+          window.scrollTo(x,y);
+          // topfunction();
+          return false;
+      }
+  });
+  });
+
+  </script>
 
 </body>
 
