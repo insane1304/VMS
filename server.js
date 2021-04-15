@@ -163,7 +163,7 @@ cron.schedule('0 0 0 * * *', () => {
         today = yyyy + '-' + mm + '-' + dd;
         console.log(today);
 
-        valid.setDate(valid.getDate()-2);
+        valid.setDate(valid.getDate()-1);
         var dd1 = valid.getDate();
         var mm1 = valid.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
         var yyyy1 = valid.getFullYear();
