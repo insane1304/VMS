@@ -322,8 +322,6 @@ require('./instant_accept')(app);
 
 require('./del_request')(app);
 
-require('./search_pending')(app);
-
 
 
 //SIGNUP
