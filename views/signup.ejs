@@ -63,7 +63,7 @@
 
     <div class="container" id="head-color">
 
-      <form id="signup-form"style="margin-top: 80px" action="/signup" method="post" >
+      <form id="signup-form" style="margin-top: 80px" action="/signup" method="post" >
 
         <p style="font-size: 40px">New User Registration</p>
 
@@ -209,6 +209,7 @@
     appId: "1:436501438451:web:55861e256d915128e9fc86",
     measurementId: "G-QTTWTF8QPG"
   };
+  
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   console.log(firebase);
@@ -325,7 +326,7 @@ $(document).ready(function () {
 
 
         matched = (password == confirm) ? true : false;
-        if(matched && mobile.lentgh=10) {
+        if(matched && mobile.length==10) {
             //Submit line commented out for example.  In production, remove the //
             $("#signup-form").submit();
 
