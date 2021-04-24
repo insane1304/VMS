@@ -31,16 +31,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-// mongoose.connect("mongodb://localhost:27017/todo", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
-mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/todo", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+// mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
+
 mongoose.set("useCreateIndex", true);
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 });
+
+// mongoose.connect(process.env.DATABASE_URL , { useNewUrlParser: true, useUnifiedTopology: true  })
+//         .then(connect => console.log('connected to mongodb..'))
+//         .catch(e => console.log('could not connect to mongodb', e))
 
 const usersSchema = new mongoose.Schema({
   username: String,

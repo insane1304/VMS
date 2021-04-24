@@ -209,7 +209,7 @@
     appId: "1:436501438451:web:55861e256d915128e9fc86",
     measurementId: "G-QTTWTF8QPG"
   };
-  
+
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   console.log(firebase);
@@ -290,8 +290,10 @@
     for (let i = 0; i < 30; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
+    var date=new Date(Date.now());
     // const d=new Date() + '-' + 'base64';
     var src = canvas.toDataURL();
+    result=result+date;
     ref.child(result).putString(src, 'data_url').then(function(snapshot) {
       console.log('Uploaded a data_url string!');
       console.log(result);
