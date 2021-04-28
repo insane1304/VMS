@@ -75,25 +75,10 @@
 
   <!-- login -->
   <section id="login">
+    <% if(user=="admin"){ %>
     <div class="align-login">
 
         <div class="row">
-          <div class="col-sm-6 col-xs-12 col-card">
-            <a href="/signup">
-            <div class="login-card">
-              <div class="card-body">
-                <h3 class="name"><strong>Want to Visit? Request HERE!!</strong></h3>
-                <img src="resources/visitor-card.png" class="admin-img img-fluid" alt="">
-              </div>
-
-            </div>
-            </a>
-          </div>
-
-    <% if(user=="admin"){ %>
-    <!-- <div class="align-login"> -->
-
-        <!-- <div class="row"> -->
           <div href="/profile" class="col-sm-6 col-xs-12 col-card">
             <a href="/profile">
             <div class="login-card">
@@ -110,9 +95,9 @@
 
 
     <% if(user=="visitor"){ %>
-    <!-- <div class="align-login"> -->
+    <div class="align-login">
 
-        <!-- <div class="row"> -->
+        <div class="row">
           <div href="/profile" class="col-sm-6 col-xs-12 col-card">
             <a href="/profile">
             <div class="login-card">
@@ -129,7 +114,20 @@
 
 
     <% if(user=="nil"){ %>
+      <div class="align-login">
 
+          <div class="row">
+            <div class="col-sm-6 col-xs-12 col-card">
+              <a href="/signup">
+              <div class="login-card">
+                <div class="card-body">
+                  <h3 class="name"><strong>Want to Visit? Request HERE!!</strong></h3>
+                  <img src="resources/visitor-card.png" class="admin-img img-fluid" alt="">
+                </div>
+
+              </div>
+              </a>
+            </div>
     <!-- <div class="align-login">
       <a href="/login">
         <div class="row"> -->
