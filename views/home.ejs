@@ -75,17 +75,34 @@
 
   <!-- login -->
   <section id="login">
-    <% if(user=="admin"){ %>
     <div class="align-login">
-      <a href="/profile">
+
         <div class="row">
           <div class="col-sm-6 col-xs-12 col-card">
+            <a href="/signup">
+            <div class="login-card">
+              <div class="card-body">
+                <h3 class="name"><strong>Want to Visit? Request HERE!!</strong></h3>
+                <img src="resources/visitor-card.png" class="admin-img img-fluid" alt="">
+              </div>
+
+            </div>
+            </a>
+          </div>
+
+    <% if(user=="admin"){ %>
+    <!-- <div class="align-login"> -->
+
+        <!-- <div class="row"> -->
+          <div href="/profile" class="col-sm-6 col-xs-12 col-card">
+            <a href="/profile">
             <div class="login-card">
               <div class="card-body">
                 <h3 class="name"><strong>Admin Profile</strong></h3>
                 <img src="resources/user-login.png" class="admin-img img-fluid" alt="">
               </div>
             </div>
+          </a>
           </div>
         </div>
     </div>
@@ -93,16 +110,18 @@
 
 
     <% if(user=="visitor"){ %>
-    <div class="align-login">
-      <a href="/profile">
-        <div class="row">
-          <div class="col-sm-6 col-xs-12 col-card">
+    <!-- <div class="align-login"> -->
+
+        <!-- <div class="row"> -->
+          <div href="/profile" class="col-sm-6 col-xs-12 col-card">
+            <a href="/profile">
             <div class="login-card">
               <div class="card-body">
                 <h3 class="name"><strong>Visitor Profile</strong></h3>
                 <img src="resources/user-login.png" class="visito-img img-fluid" alt="">
               </div>
             </div>
+          </a>
           </div>
         </div>
     </div>
@@ -111,30 +130,23 @@
 
     <% if(user=="nil"){ %>
 
-    <div class="align-login">
+    <!-- <div class="align-login">
       <a href="/login">
-        <div class="row">
-          <div class="col-sm-6 col-xs-12 col-card">
+        <div class="row"> -->
+          <div href="/login" class="col-sm-6 col-xs-12 col-card">
+            <a href="/login">
             <div class="login-card">
               <div class="card-body">
                 <h3 class="name"><strong>Login</strong></h3>
                 <img src="resources/user-login.png" class="admin-img img-fluid" alt="">
               </div>
             </div>
-          </div>
-
-          <!-- <div class="col-sm-6 col-xs-12 visitor-img col-card">
-            <div class="login-card">
-              <div class="card-body">
-                <h3 class="name"><strong>Visitor Login</strong></h3>
-                <img src="resources/user-login.png" class="visitor-img img-fluid" alt="">
-              </div>
-            </div>
+          </a>
           </div>
         </div>
-      </a>
-    </div>
-    <% } %> -->
+        </div>
+
+    <% } %>
 
 
   </section>

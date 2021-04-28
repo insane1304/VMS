@@ -446,7 +446,7 @@ app.post("/signup", function(req, res) {
           req.session.message = {
             type: 'success',
             intro: 'Registration Success',
-            message: 'Visitor registered successfully'
+            message: 'Your Visit Request Has Been Sent To Admin'
           }
           res.render("login.ejs", {
             message: req.session.message
