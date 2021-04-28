@@ -339,12 +339,13 @@ async function uploadImage() {
       .then((url) => {
         // console.log(url);
         document.getElementById("url").value = url;
+        $("#signup-form").submit();
 
       })
     // console.log(d.getDownloadURL());
     // alert("Image Uploaded")
-    $("#signup-form").submit();
-    document.getElementById("submit-button").disabled=false;
+
+    // document.getElementById("submit-button").disabled=false;
 
   });
 
