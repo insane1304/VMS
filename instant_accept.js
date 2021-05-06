@@ -20,10 +20,22 @@ module.exports = function(app){
   // console.log(req.user.username);
    var username=req.body.instant_accept;
 
-   var x=new Date(Date.now());
-   x.setMilliseconds(0);
-   today=x.toLocaleString();
+   // var x=new Date(Date.now());
+   // x.setMilliseconds(0);
+   // today=x.toLocaleString();
+   var today = new Date(Date.now());
+   var dd = today.getDate();
+   var mm = today.getMonth() + 1;
+   var yyyy = today.getFullYear();
+   if (dd < 10) {
+     dd = '0' + dd
+   }
+   if (mm < 10) {
+     mm = '0' + mm
+   }
 
+   today = yyyy + '-' + mm + '-' + dd;
+   console.log(today);
    User.findOne({username:username},function(err,user){
      if(err)
      {

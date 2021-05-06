@@ -28,21 +28,34 @@ module.exports = function(app){
        if(user && user.status=="pending")
        {
 
-         var x=new Date(Date.now());
-
-         x.setMilliseconds(0);
-         // console.log(x);
-
-         today=x.toLocaleString();
-         // console.log(today);
-
-
-         var nt=new Date(today);
-         var y=nt;
+         // var x=new Date(Date.now());
+         //
+         // x.setMilliseconds(0);
+         // // console.log(x);
+         //
+         // today=x.toLocaleString();
+         // // console.log(today);
+         //
+         //
+         // var nt=new Date(today);
+         // var y=nt;
          // console.log(nt.setMilliseconds(0));
          // console.log(nt);
          // if(nt=x)
          // console.log("MATCHED")
+         var today = new Date(Date.now());
+         var dd = today.getDate();
+         var mm = today.getMonth() + 1;
+         var yyyy = today.getFullYear();
+         if (dd < 10) {
+           dd = '0' + dd
+         }
+         if (mm < 10) {
+           mm = '0' + mm
+         }
+
+         today = yyyy + '-' + mm + '-' + dd;
+         console.log(today);
 
 
          User.updateOne({username:req.body.del_request},{status:"Inactive",outDate:today},function(){
