@@ -122,19 +122,28 @@
           <input name="date" type="date" class="form-control" id="date"  pattern="\d{2}-\d{2}-\d{4}" required>
         </div>
 
-        <div class="container" style="margin-left: auto , margin-right: auto;">
-          <button class="btn btn-primary" style="margin-bottom: 10px;" id="snap">Capture</button>
-
+        <div class="form-group">
+        <label for="pic">Upload Your Photo</label>
+        <small id="emailHelp" class="form-text text-muted">Photo will be required for verification of your identity.</small>
+        <br></br>
           <!-- <button class="btn btn-primary" id="upload-button" style="margin-bottom: 10px;" disabled onclick="upload()">Upload Image</button> -->
           <!-- Stream video via webcam -->
-
-          <video style=" transform: rotateY(180deg);
+          <!-- <div class="container" style="margin-left: auto , margin-right: auto;"> -->
+          <video   name="pic" style=" transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-    -moz-transform:rotateY(180deg);
-"id="video" width=300 height=auto  autoplay></video>
-          <canvas style="align:center;" id="canvas" width="300" height="300"></canvas>
+    -moz-transform:rotateY(180deg); text-align:center;display:block; margin: auto;
+"id="video" width="300" height="300"  autoplay></video>
+<!-- <br></br> -->
+<button name="pic" class="btn btn-primary" style=" display:block; margin: auto; margin-top: 15px ;margin-bottom: 15px;" id="snap">Capture</button>
+<!-- <br></br> -->
+          <canvas style=" transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); text-align:center; display:block; margin: auto;" id="canvas" width="300" height="300"></canvas>
 
-        </div>
+
+
+        <!-- </div> -->
+      </div>
         <div class="">
           <input type="text" name="url" id="url" value="" hidden>
         </div>
@@ -394,7 +403,7 @@ $(document).ready(function () {
       }
       else {
         $("#mobileResponseDiv").html("Incorrect Mobile Number...<br></br>");
-        var x = $("#mobile-number").offset().left;
+        var x = 0;
         var y = $("#mobile-number").offset().top;
         window.scrollTo(x,y);
 
