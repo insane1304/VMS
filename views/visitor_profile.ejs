@@ -120,7 +120,7 @@
 
       <div class="form-group">
         <label id="mobile-number" for="mobile">mobile</label>
-        <input id="mobile"name="mobile" type="text" class="form-control" id="mobile" value="<%= visitor.mobile %>">
+        <input id="mobile" name="mobile" type="text" class="form-control"  value="<%= visitor.mobile %>">
       </div>
       <div style="color:red;" id="mobileResponseDiv"></div>
 
@@ -148,7 +148,7 @@
 
   <div class="row">
     <div class="col-sm-12 text-center" style="margin-bottom: 2px;">
-      <button style="margin-top: 15px;" formaction="visitor_update_by_visitor" formmethod="post" onclick=""
+      <button id="update-button"style="margin-top: 15px;" formaction="visitor_update_by_visitor" formmethod="post" onclick=""
         class="btn btn-primary btn-md">Update</button>
     </div>
   </div>
@@ -221,7 +221,7 @@
           // var s="1230567890";
           if(mobile.length==10) {
               //Submit line commented out for example.  In production, remove the //
-              $("#update-form").attr("action","visitor_update_by_admin");
+              $("#update-form").attr("action","visitor_update_by_visitor");
               $("#update-form").attr("method","post");
               $("#update-form").submit();
 
